@@ -1,7 +1,12 @@
+import React from "react";
+import LandingPage from "./components/sidePages/LandingPage";
+import UpperNav from "./components/sidePages/navBar/UpperNav";
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Basic Setup complete
-    </h1>
-  )
+    <>
+      <UpperNav />
+      <LandingPage />
+    </>
+  );
 }
