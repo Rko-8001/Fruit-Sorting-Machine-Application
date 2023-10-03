@@ -1,7 +1,8 @@
 import React from "react";
-import fruitLogo from "./assets/fruitLogo.jpeg";
 import fruitSort from "./assets/fruitSort.jpg";
 import { GiFruitBowl } from "react-icons/gi";
+import { Link } from "react-router-dom";
+
 export default function LandingPage() {
   return (
     <>
@@ -17,13 +18,13 @@ export default function LandingPage() {
               fruits in a jiffy.
             </p>
             <div class="flex flex-col items-center mt-10 mx-5 gap-4 lg:flex-row">
-              <button class="bg-gray-100 inline-flex py-4 px-6 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
+              <Link to="/login" class="bg-gray-100 inline-flex py-4 px-6 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
                 <GiFruitBowl className="mr-2 w-auto h-10" />
                 <span class="ml-4 flex items-start flex-col leading-none">
                   <span class="text-sm text-gray-600 mb-1">Let's get </span>
                   <span class="title-font font-bold">STARTED</span>
                 </span>
-              </button>
+              </Link>
             </div>
           </div>
           <div class="items-center justify-end hidden col-span-1 md:flex">
