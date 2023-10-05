@@ -35,7 +35,7 @@ export default function LoginPage() {
             <div className="text-center">
               <p className="text-sm">
                 Forget your
-                <Link to="#" className="text-cyan-600"> Password ? </Link>
+                <Link to="/forgetPassword" className="text-cyan-600"> Password ? </Link>
               </p>
             </div>
           </div>
