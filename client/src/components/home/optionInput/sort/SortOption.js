@@ -21,4 +21,5 @@ export const SortOptions = [
         value: "freshness",
         button: FaAirFreshener
     }
+    // bypass mode can be added here
 ]

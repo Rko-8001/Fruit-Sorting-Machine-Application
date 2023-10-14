@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from '../sidePages/sideBar/SideBar'
-import SortCategory from './optionInput/SortCategory'
+import SortCategory from './optionInput/sort/SortCategory'
 
 export default function HomeDashboard() {
   return (
