@@ -11,12 +11,12 @@ export const SideBarOptions = [
     {
         name: 'Statistics',
         button: ImStatsBars,
-        path: '/home'
+        path: '/stats'
     },
     {
         name: 'User Guide',
         button: VscVmRunning,
-        path: '/home'
+        path: '/howToUse'
     },
     {
         name: 'Logout',

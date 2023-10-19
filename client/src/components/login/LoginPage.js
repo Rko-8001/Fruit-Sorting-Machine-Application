@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import  {useNavigate} from "react-router-dom";
 import KeyBoardComponent from "./KeyBoardComponent";
-import { getOptionPhase, setOptionPhase } from "../tokens/Token.js";
+import {setOptionPhase } from "../tokens/Token.js";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -14,10 +14,8 @@ export default function LoginPage() {
     setTimeout(() => {
       setMssg("Logging you in ...");
     }, 1000);
-  
-    if(getOptionPhase() === 0){
-      setOptionPhase(0);
-    }
+
+    setOptionPhase("sortPage");
     navigate("/home");
   }
 

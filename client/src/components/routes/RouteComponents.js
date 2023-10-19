@@ -1,31 +1,73 @@
-import UpperNav from '../sidePages/navBar/UpperNav';
-import LandingPage from '../sidePages/LandingPage';
-import LoginPage from '../login/LoginPage';
-import HomeDashboard from '../home/HomeDashboard';
-import ErrorPage from '../otherPages/ErrorPage';
-
-export const HomePage = 
-    <>
-        <UpperNav />
-        <LandingPage />
-    </>
-
-export const AuthPage =
-    <>
-        <UpperNav />
-        <LoginPage />
-    </>
-
-export const Dashboard =
-    <>
-        <UpperNav />
-        <HomeDashboard />
-    </>
-
-export const Error404 =
-    <>
-        <UpperNav />
-        <ErrorPage />
-    </>
+import LandingPage from "../sidePages/LandingPage";
+import LoginPage from "../login/LoginPage";
+import ErrorPage from "../otherPages/ErrorPage";
+import SideBar from "../sidePages/sideBar/SideBar";
+import SortCategory from "../home/sort/SortCategory";
+import Disclaimer from "../home/other/Disclaimer";
+import MachineHome from "../home/machine/MachineHome";
+import Statistics from "../stats/Statistics";
+import HowToUse from "../howToUse/HowToUse";
 
 
+export const HomePage = (
+  <>
+    <LandingPage />
+  </>
+);
+
+export const AuthPage = (
+  <>
+    <LoginPage />
+  </>
+);
+
+export const Dashboard = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <SortCategory />
+    </div>
+  </>
+);
+
+export const Error404 = (
+  <>
+    <ErrorPage />
+  </>
+);
+
+export const DisclaimerInfo = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <Disclaimer />
+    </div>
+  </>
+);
+
+export const MachinePage = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <MachineHome />
+    </div>
+  </>
+);
+
+export const HowToUsePage = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <HowToUse />
+    </div>
+  </>
+);
+
+export const StatisticsPage = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <Statistics />
+    </div>
+  </>
+);
