@@ -10,8 +10,7 @@ function UpperNav() {
   };
   return (
     <>
-      <header>
-        <nav className=" bg-black border-gray-200  sm:px-2 lg:px-4 py-2.5 dark:bg-gray-800">
+        <nav className=" bg-black border-gray-200  sm:px-2 lg:px-4 py-2.5 dark:bg-gray-800 w-full">
           <div className="flex">
             <button
               onClick={handleButton}
@@ -22,7 +21,6 @@ function UpperNav() {
             </button>
           </div>
         </nav>
-      </header>
     </>
   );
 }

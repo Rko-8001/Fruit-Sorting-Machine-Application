@@ -28,8 +28,6 @@ export default function FAQs() {
                         Troubleshooting
                     </button>
                 </div>
-                
-                <hr class="my-6 border-gray-200 dark:border-gray-700"/>
 
                 <div>
                     {Questions.map((question, index) => (
