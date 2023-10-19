@@ -7,7 +7,7 @@ import Disclaimer from "../home/other/Disclaimer";
 import MachineHome from "../home/machine/MachineHome";
 import Statistics from "../stats/Statistics";
 import HowToUse from "../howToUse/HowToUse";
-
+import FAQs from "../faq/FAQs";
 
 export const HomePage = (
   <>
@@ -68,6 +68,15 @@ export const StatisticsPage = (
     <div className="flex">
       <SideBar />
       <Statistics />
+    </div>
+  </>
+);
+
+export const FAQsPage = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <FAQs />
     </div>
   </>
 );

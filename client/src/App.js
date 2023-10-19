@@ -9,6 +9,7 @@ import {
   MachinePage,
   StatisticsPage,
   HowToUsePage,
+  FAQsPage,
 } from "./components/routes/RouteComponents";
 import AppRoute from "./components/routes/AppRoute";
 import UpperNav from "./components/sidePages/navBar/UpperNav";
@@ -31,6 +32,8 @@ export default function App() {
         <Route path="/stats" element={<AppRoute Component={StatisticsPage} />} />
 
         <Route path="/howToUse" element={<AppRoute Component={HowToUsePage} />} />
+
+        <Route path="/faq" element={<AppRoute Component={FAQsPage} />} />
 
         <Route path="*" element={<AppRoute Component={Error404} />} />
 
