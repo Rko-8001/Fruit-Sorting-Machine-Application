@@ -17,6 +17,17 @@ export default function FAQs() {
                 <h1 class="text-2xl font-semibold text-black lg:text-3xl ">
                     FAQ's
                 </h1>
+                <div class="flex py-4 mt-4 overflow-x-auto overflow-y-hidden text-black  justify-center ">
+                    <button class="h-12 px-8 py-2 -mb-px text-sm text-center  hover:text-blue-800 bg-transparent border-b-2 border-gray-500 sm:text-base  whitespace-nowrap focus:outline-none">
+                        General
+                    </button>
+                    <button class="h-12 px-8 py-2 -mb-px text-sm text-center  hover:text-blue-800 bg-transparent border-b-2 border-gray-500 sm:text-base  whitespace-nowrap focus:outline-none">
+                        Maintenance
+                    </button>
+                    <button class="h-12 px-8 py-2 -mb-px text-sm text-center  hover:text-blue-800 bg-transparent border-b-2 border-gray-500 sm:text-base  whitespace-nowrap focus:outline-none">
+                        Troubleshooting
+                    </button>
+                </div>
                 
                 <hr class="my-6 border-gray-200 dark:border-gray-700"/>
 
