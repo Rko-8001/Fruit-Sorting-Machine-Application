@@ -10,6 +10,7 @@ import {
   StatisticsPage,
   HowToUsePage,
   FAQsPage,
+  SessionStatPage,
 } from "./components/routes/RouteComponents";
 import AppRoute from "./components/routes/AppRoute";
 import UpperNav from "./components/sidePages/navBar/UpperNav";
@@ -31,7 +32,10 @@ export default function App() {
           <Route path="machineHome" element={<AppRoute Component={MachinePage} />} />
         </Route>
 
-        <Route path="/stats" element={<AppRoute Component={StatisticsPage} />} />
+        <Route path="/stats">
+          <Route index element={<AppRoute Component={StatisticsPage} />} />
+          <Route path=":id" element={<AppRoute Component={SessionStatPage} />} />
+        </Route>
 
         <Route path="/howToUse" element={<AppRoute Component={HowToUsePage} />} />
 

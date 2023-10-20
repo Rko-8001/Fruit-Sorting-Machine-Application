@@ -8,6 +8,7 @@ import MachineHome from "../home/machine/MachineHome";
 import Statistics from "../stats/Statistics";
 import HowToUse from "../howToUse/HowToUse";
 import FAQs from "../faq/FAQs";
+import SessionStat from "../stats/SessionStat";
 
 export const HomePage = (
   <>
@@ -68,6 +69,15 @@ export const StatisticsPage = (
     <div className="flex">
       <SideBar />
       <Statistics />
+    </div>
+  </>
+);
+
+export const SessionStatPage = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <SessionStat />
     </div>
   </>
 );
