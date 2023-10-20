@@ -15,8 +15,8 @@ export default function HowToUse() {
           <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-12 xl:gap-16 md:grid-cols-2 xl:grid-cols-3">
             {Steps.map((step, index) => (
               <div key={index} class="space-y-3">
-                <span class="inline-block p-3 text-blue-500 bg-blue-100 rounded-full ">
-                    <step.button class="w-5 h-5" />
+                <span class="inline-block p-2 text-blue-500 bg-blue-100 rounded-full ">
+                    <step.button class="w-8 h-8" />
                 </span>
 
                 <h1 class="text-xl font-semibold text-gray-700 capitalize ">{step.name}</h1>
