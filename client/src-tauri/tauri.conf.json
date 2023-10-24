@@ -7,7 +7,7 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "client",
+    "productName": "fruitastic - alpha 0.1.0",
     "version": "0.1.0"
   },
   "tauri": {
