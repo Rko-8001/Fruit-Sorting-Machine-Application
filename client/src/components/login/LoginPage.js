@@ -24,7 +24,7 @@ export default function LoginPage() {
       <div className=" bg-gray-900 pb-6 pt-2 min-h-screen">
         <div className="pb-6 pt-2 flex items-center justify-center">
           <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
-            <h1 className="text-2xl font-semibold text-center text-gray-500 mt-8 mb-6">Access your Machine</h1> 
+            <h1 className="text-2xl md:text-xl sm:text-md font-semibold text-center text-gray-500 mt-8 mb-6">Access your Machine</h1> 
             <form>
               <div className="mb-6">
                 <label htmlFor="password" className="block mb-2 text-sm text-gray-600">Password</label>
@@ -43,7 +43,8 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="py-10 m-5 px-20 container items-center border-box justify-center">
+        <div className="py-15 sm:py-5 md:py-10 px-15 md:px-10 sm:px-5 flex text-center items-center justify-center">
+          <p></p>
           <KeyBoardComponent input={password} setInput={setPassword}/>
         </div>
       </div>
