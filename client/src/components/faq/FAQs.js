@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import React from 'react'
 import { Questions } from './FAQQuestions'
 
@@ -6,60 +6,59 @@ export default function FAQs() {
     const [isOpen, setIsOpen] = useState(new Array(Questions.length).fill(false));
 
     const toggleQuestion = (index) => {
-      const updatedIsOpen = [...isOpen];
-      updatedIsOpen[index] = !updatedIsOpen[index];
-      setIsOpen(updatedIsOpen);
+        const updatedIsOpen = [...isOpen];
+        updatedIsOpen[index] = !updatedIsOpen[index];
+        setIsOpen(updatedIsOpen);
     };
-    return (
-    <>
-        <section class="bg-white ">
-            <div class="container px-6 py-10 mx-auto">
-                <h1 class="text-2xl font-semibold text-black lg:text-3xl ">
-                    FAQ's
-                </h1>
-                <div class="flex py-4 mt-4 overflow-x-auto overflow-y-hidden text-black ">
-                    <button class="h-12 px-8 py-2 -mb-px text-sm text-center  hover:text-blue-800 bg-transparent border-b-2 border-gray-500 sm:text-base  whitespace-nowrap focus:outline-none">
-                        General
-                    </button>
-                    <button class="h-12 px-8 py-2 -mb-px text-sm text-center  hover:text-blue-800 bg-transparent border-b-2 border-gray-500 sm:text-base  whitespace-nowrap focus:outline-none">
-                        Maintenance
-                    </button>
-                    <button class="h-12 px-8 py-2 -mb-px text-sm text-center  hover:text-blue-800 bg-transparent border-b-2 border-gray-500 sm:text-base  whitespace-nowrap focus:outline-none">
-                        Troubleshooting
-                    </button>
-                </div>
 
-                <div>
-                    {Questions.map((question, index) => (
-                        <div key={index}>
+    return (
+        <Fragment>  
+            <section className="bg-white dark:bg-gray-900">
+                <div className="container px-6 py-12 mx-auto">
+                    <h1 className="text-3xl sm:text-xl font-semibold text-center text-gray-800 lg:text-4xl ">
+                        Have any Questions?
+                    </h1>
+
+                    <div className="mt-8 xl:mt-16 lg:flex lg:-mx-12">
+                        <div className="lg:mx-12">
+                            <h1 className="text-2xl  font-semibold text-gray-800 ">
+                                Table of Content
+                            </h1>
+
+                            <div className="mt-4 text-xl md:text-md space-y-8 lg:mt-8">
+                                <button className="block text-blue-500 hover:underline">General         </button>
+                                <button className="block text-gray-500 hover:underline">Cleaning        </button>
+                                <button className="block text-gray-500 hover:underline">Usage           </button>
+                                <button className="block text-gray-500 hover:underline">Troubleshooting </button>
+                            </div>
+                        </div>
+
+                        <div className="flex-1 mt-8 lg:mx-12 lg:mt-0">
                             <div>
-                                <button 
-                                    onClick={ (e) => {
-                                        e.preventDefault();
-                                        toggleQuestion(index);
-                                    }}
-                                    class="flex items-center focus:outline-none">
-                                    <svg class="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
-                                    <h1 class="mx-4 text-xl text-black">
-                                        {question.question}
-                                    </h1>
+                                <button className="flex items-center focus:outline-none">
+                                    <svg className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+
+                                    <h1 className="mx-4 text-xl text-gray-700 dark:text-white">
+                                        How i can play for my appoinment ?
+                                        </h1>
                                 </button>
 
-                                {isOpen[index] && <div class="flex mt-8 md:mx-10">
-                                    <span class="border border-blue-500"></span>
-                                    <p class="max-w-3xl px-4 text-black">
-                                        {question.answer}
+                                <div className="flex mt-8 md:mx-10">
+                                    <span className="border border-blue-500"></span>
+
+                                    <p className="max-w-3xl px-4 text-gray-500 dark:text-gray-300">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eum quae. Harum officiis reprehenderit ex quia ducimus minima id provident molestias optio nam vel, quidem iure voluptatem, repellat et ipsa.
                                     </p>
-                                </div>}
+                                </div>
                             </div>
-                            <hr class="my-8 border-gray-200 w-full dark:border-gray-700"/>
+
+                            <hr className="my-8 border-gray-200 dark:border-gray-700" />
+
                         </div>
-                    ))}
-                    
-            
+                    </div>
                 </div>
-            </div>
-        </section>
-    </>
-  )
+            </section>
+        </Fragment>
+    )
 }
+
