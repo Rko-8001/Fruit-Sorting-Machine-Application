@@ -7,7 +7,7 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "fruitastic - alpha 0.1.0",
+    "productName": "client",
     "version": "0.1.0"
   },
   "tauri": {
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.btp.fruitsorter",
+      "identifier": "com.fruitsorter.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -56,10 +56,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 750,
+        "height": 600,
         "resizable": true,
-        "title": "Fruit Sorter",
-        "width": 900
+        "title": "fruit-sorter",
+        "width": 800
       }
     ]
   }
