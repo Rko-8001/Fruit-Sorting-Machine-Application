@@ -1,13 +1,34 @@
 import React from "react";
-import { BiConfused } from "react-icons/bi";
+import { BiCloudLightRain, BiConfused } from "react-icons/bi";
 import { useNavigate, Link } from "react-router-dom";
-import { setOptionPhase } from "../../tokens/Token";
+import { getSortCategory, setOptionPhase } from "../../tokens/Token";
+import { BackendUrl } from "../../../Url";
 export default function Disclaimer() {
   const navigate = useNavigate();
-  const nextPage = (e)=> { 
-    e.preventDefault();
+  const nextPage = () => {
     setOptionPhase("machine")
     navigate("/home/machineHome");
+  }
+
+  const beginProcess = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`${BackendUrl}process/begin`, {
+        // method: "POST",
+        method: "GET",
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
+        // body: JSON.stringify(getSortCategory())
+      })
+      const data = await response.json();
+      nextPage()
+      console.log(data);
+    } catch (error) {
+      window.alert("Internal Error Occurred try Again!!")
+      console.log(error);
+    }
   }
 
   return (
@@ -61,7 +82,7 @@ export default function Disclaimer() {
             <hr className="my-6 border-gray-200 dark:border-gray-700" />
           </div>
 
-          <button onClick={nextPage} className="px-6 py-2 mt-6 text-sm font-medium tracking-wider text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+          <button onClick={beginProcess} className="px-6 py-2 mt-6 text-sm font-medium tracking-wider text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
             Let's Sort
           </button>
         </main>

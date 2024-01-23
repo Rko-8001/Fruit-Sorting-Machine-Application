@@ -1,12 +1,16 @@
 # server.py
 
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
 import threading
 import signal
 import cv2
 import numpy as np
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
+
+
 # Flag to indicate whether the object detection thread should continue running
 stop_object_detection = False
 object_detection_thread = None
@@ -36,8 +40,8 @@ def home():
     print('home')
     return 'aur bhai'
 
-@app.route('/process/begin')
-def begin():
+@app.route('/process/begin', methods=['GET'])
+def processBegin():
     # object detection process [ camera on ]
     global stop_object_detection
     global object_detection_thread
@@ -45,12 +49,20 @@ def begin():
     objection_detection_thread = threading.Thread(target=objectDetectionProcess)
     objection_detection_thread.start()
     # start conveyor belt
-
+    response = { 'message': "Process Started"}
     #return ack
-    return "Process started"
+    return jsonify(response)
+
+@app.route('/process/pause')
+def processPauseOrUnPause():
+    # start or stop the conveyor belt
+
+    response = { 'message': "Process Paused"}
+    #return ack
+    return jsonify(response)
 
 @app.route('/process/stop')
-def stop():
+def processStop():
     global stop_object_detection
     global object_detection_thread
 
@@ -61,9 +73,13 @@ def stop():
     if object_detection_thread is not None:
         object_detection_thread.join()
         object_detection_thread = None 
+    
+    # stop the conveyor belt
 
     # Return a response indicating that the process has been stopped
-    return "Process stopped"
+    response =  {'message': "Process Stopped"}
+    #return ack
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(port=5000)
