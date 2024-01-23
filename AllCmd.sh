@@ -48,7 +48,7 @@ activate_virtual_env() {
 }
 
 # function to create virtual environment for the server
-creating_virtual_env() {
+create_virtual_env() {
     cd "$BASE_DIR"
     virtualenv -p python3 server-env
     echo "Virtual environment created."
