@@ -37,6 +37,13 @@ run_client() {
     echo "client running."
 }
 
+# function to run client in browser
+run_client_browser() {
+    cd "$Client_DIR"
+    npm start
+    echo "client running."
+}
+
 # function to setup client
 setup_client() {
     install_client_dependencies
