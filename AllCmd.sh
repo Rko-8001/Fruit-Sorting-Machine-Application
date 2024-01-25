@@ -37,6 +37,12 @@ run_frontend() {
     echo "Frontend running."
 }
 
+# function to setup frontend
+setup_frontend() {
+    install_frontend_dependencies
+    build_frontend
+    echo "Frontend setup complete."
+}
 
 ######          server Cmd       ######
 
@@ -61,10 +67,26 @@ install_server_dependencies() {
     echo "Server dependencies installed."
 }
 
+# set up from start for server
+setup_server() {
+    create_virtual_env
+    activate_virtual_env
+    install_server_dependencies
+    echo "Server setup complete."
+}
+
 # function to run server
 run_server() {
     activate_virtual_env
     cd "$Server_DIR"
     python3 ./server.py
     echo "Server running."
+}
+
+# function to update the requirements.txt file
+update_requirements() {
+    activate_virtual_env
+    cd "$Server_DIR"
+    pip freeze > ./requirements.txt
+    echo "Requirements updated."
 }
