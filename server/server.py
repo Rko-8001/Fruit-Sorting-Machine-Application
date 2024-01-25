@@ -34,35 +34,15 @@ def objectDetectionProcess():
     cap.release()
     cv2.destroyAllWindows()
 
-
-@app.route('/')
-def home():
-    print('home')
-    return 'aur bhai'
-
-@app.route('/process/begin', methods=['GET'])
-def processBegin():
-    # object detection process [ camera on ]
+def startObjectDetection():
     global stop_object_detection
     global object_detection_thread
 
-    objection_detection_thread = threading.Thread(target=objectDetectionProcess)
-    objection_detection_thread.start()
-    # start conveyor belt
-    response = { 'message': "Process Started"}
-    #return ack
-    return jsonify(response)
+    stop_object_detection = False
+    object_detection_thread = threading.Thread(target=objectDetectionProcess)
+    object_detection_thread.start()
 
-@app.route('/process/pause')
-def processPauseOrUnPause():
-    # start or stop the conveyor belt
-
-    response = { 'message': "Process Paused"}
-    #return ack
-    return jsonify(response)
-
-@app.route('/process/stop')
-def processStop():
+def stopObjectDetection():
     global stop_object_detection
     global object_detection_thread
 
@@ -72,14 +52,55 @@ def processStop():
     # Optionally, wait for the thread to finish
     if object_detection_thread is not None:
         object_detection_thread.join()
-        object_detection_thread = None 
-    
+        object_detection_thread = None
+
+
+@app.route('/')
+def home():
+    print('home')
+    return 'aur bhai'
+
+@app.route('/process/begin', methods=['GET'])
+def processBegin():
+    # object detection process [ camera on ]
+    startObjectDetection()
+
+    # start conveyor belt
+    response = { 'message': "Process Started"}
+    #return ack
+    return jsonify(response), 200
+
+@app.route('/process/pause')
+def processPause():
+    # pause camera 
+    stopObjectDetection()
+
+    # start or stop the conveyor belt
+
+    response = { 'message': "Process Paused"}
+    #return ack
+    return jsonify(response), 200
+
+@app.route('/process/unpause')
+def processUnpause():
+    # unpause camera
+    startObjectDetection()
+    # start conveyor belt
+
+    response = { 'message': "Process UnPaused"}
+    #return ack
+    return jsonify(response), 200 
+
+@app.route('/process/stop')
+def processStop():
+    # stop camera
+    stopObjectDetection()
     # stop the conveyor belt
 
     # Return a response indicating that the process has been stopped
     response =  {'message': "Process Stopped"}
     #return ack
-    return jsonify(response)
+    return jsonify(response), 200
 
 if __name__ == '__main__':
     app.run(port=5000)
