@@ -14,7 +14,7 @@ export default function Disclaimer() {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${BackendUrl}process/begin`, {
+      const response = await fetch(`${BackendUrl}process/start`, {
         // method: "POST",
         method: "GET",
         // headers: {
@@ -22,9 +22,15 @@ export default function Disclaimer() {
         // },
         // body: JSON.stringify(getSortCategory())
       })
-      const data = await response.json();
-      nextPage()
-      console.log(data);
+      if (response.status === 200) {
+        const data = await response.json();
+        nextPage()
+        console.log(data);
+      }
+      else {
+        window.alert("Internal Error Occurred try Again!!")
+      }
+
     } catch (error) {
       window.alert("Internal Error Occurred try Again!!")
       console.log(error);

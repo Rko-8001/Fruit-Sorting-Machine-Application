@@ -1,35 +1,93 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
 import { FaPlay, FaPause, FaHourglassStart, FaStop } from "react-icons/fa";
 import { BackendUrl } from "../../../Url";
 import { fruitStats } from "./MachineData";
+import { setOptionPhase } from '../../tokens/Token';
 
 export default function MachineHome() {
+  const navigate = useNavigate();
   const [isRunning, setIsRunning] = useState(true);
   const [videoSrc, setVideoSrc] = useState('');
 
-  useEffect(() => {
-    // Connect to the WebSocket server for video frames
-    const videoSocket = io({BackendUrl});
-    videoSocket.on('video_frame', (data) => {
-      const blob = new Blob([data], { type: 'image/jpeg' });
-      const url = URL.createObjectURL(blob);
-      setVideoSrc(url);
-    });
 
-    // Clean up WebSocket connections when component unmounts
-    return () => {
-      videoSocket.disconnect();
-    };
-  }, []);
+  const pauseProcess = async () => {
+    try {
+      const response = await fetch(`${BackendUrl}process/stop`, {
+        method: "GET",
+      })
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data);
+      }
+      else {
+        window.alert("Internal Error Occurred try Again!!")
+      }
+    }
+    catch (error) {
+      window.alert("Internal Error Occurred try Again!!")
+      console.log(error);
+    }
+    setIsRunning(false)
+  }
+
+  const resumeProcess = async () => {
+    try {
+      const response = await fetch(`${BackendUrl}process/start`, {
+        method: "GET",
+      })
+      if (response.status === 200) {
+        const data = await response.json();
+        console.log(data);
+      }
+      else {
+        window.alert("Internal Error Occurred try Again!!")
+      }
+    }
+    catch (error) {
+      window.alert("Internal Error Occurred try Again!!")
+      console.log(error);
+    }
+    setIsRunning(true)
+  }
+
+  const handlePauseUnPause = (e) => {
+    e.preventDefault();
+    if (isRunning) {
+      pauseProcess()
+    }
+    else {
+      resumeProcess()
+    }
+  }
+
+  const handleStop = (e) => {
+    e.preventDefault();
+    pauseProcess()
+    setOptionPhase("sortPage")
+    navigate("/home");
+  }
 
 
-  
+  // useEffect(() => {
+  //   // Connect to the WebSocket server for video frames
+  //   const videoSocket = io({BackendUrl});
+  //   videoSocket.on('video_frame', (data) => {
+  //     const blob = new Blob([data], { type: 'image/jpeg' });
+  //     const url = URL.createObjectURL(blob);
+  //     setVideoSrc(url);
+  //   });
 
-  useEffect(() => {
+  //   // Clean up WebSocket connections when component unmounts
+  //   return () => {
+  //     videoSocket.disconnect();
+  //   };
+  // }, []);
 
-  }, [])
+
+
   return (
     <div className="px-20 w-full md:px-10 sm:px-5 justify-center flex ">
       <div className="flex-grow text-gray-800">
@@ -48,18 +106,32 @@ export default function MachineHome() {
               </button>
 
               <button
+                onClick={handlePauseUnPause}
                 className="inline-flex px-5 py-3 text-blue-600 hover:text-blue-700 focus:text-blue-700 hover:bg-blue-100 focus:bg-blue-100 border border-purple-blue rounded-md ml-6 mb-3"
               >
                 {isRunning
                   ?
-                  (<FaPause className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2" />)
+                  (
+                    <>
+                      <FaPause className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2" />
+                      Pause Machine
+                    </>
+
+                  )
                   :
-                  (<FaPlay className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2" />)
+                  (
+                    <>
+                      <FaPause className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2" />
+                      UnPause Machine
+                    </>
+                  )
                 }
-                Pause Machine
               </button>
 
-              <button className="inline-flex px-5 py-3 text-white bg-red-600 hover:bg-red-700 focus:bg-red-700 rounded-md ml-6 mb-3">
+              <button 
+                onClick={handleStop}
+                className="inline-flex px-5 py-3 text-white bg-red-600 hover:bg-red-700 focus:bg-red-700 rounded-md ml-6 mb-3"
+              >
                 <FaStop className="flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2" />
                 Stop Machine
               </button>
