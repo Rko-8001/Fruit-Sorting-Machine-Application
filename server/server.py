@@ -14,10 +14,10 @@ CORS(app)  # Enable CORS for all routes
 # Flag to indicate whether the object detection thread should continue running
 stop_object_detection = False
 object_detection_thread = None
+stop_event = threading.Event()
 
-def objectDetectionProcess():
-    global stop_object_detection
-    print(stop_object_detection)
+def objectDetectionProcess(stop_event):
+    print("Object Detection thread started.")
     cap = cv2.VideoCapture(0)
 
     while True:
@@ -25,15 +25,17 @@ def objectDetectionProcess():
         ret, frame = cap.read()
         if not ret:
             print("Failed to capture frame. Exiting..")
+            break
         # Display the frame with bounding boxes
         cv2.imshow("Object Detection", frame)
         # Break the loop if 'q' key is pressed
-        if cv2.waitKey(1) & stop_object_detection == True:
+        if cv2.waitKey(1) & (stop_object_detection == True or stop_event.is_set()):
             break
 
     # Release the video capture object and close the OpenCV windows
     cap.release()
     cv2.destroyAllWindows()
+    print("Object Detection thread stopped.")
 
 def startObjectDetection():
     global stop_object_detection
@@ -41,27 +43,23 @@ def startObjectDetection():
     
     stop_object_detection = False
     
-    print(object_detection_thread)
+    print("Starting Object Detection thread.")
     
-    object_detection_thread = threading.Thread(target=objectDetectionProcess)
+    object_detection_thread = threading.Thread(target=objectDetectionProcess, args=(stop_event,))
     object_detection_thread.start()
 
 def stopObjectDetection():
     global stop_object_detection
     global object_detection_thread
 
-    # Set the flag to stop the object detection thread
-    stop_object_detection = True
+    # Set the event to stop the object detection thread
+    stop_event.set()
 
-    # # Optionally, wait for the thread to finish
-    # if object_detection_thread is not None:
-    #     object_detection_thread = None
-    print(object_detection_thread)
-    while(object_detection_thread != None):
+    # Wait for the thread to finish
+    if object_detection_thread is not None:
         object_detection_thread.join()
         object_detection_thread = None
-    
-    print(object_detection_thread)
+        print("Object Detection thread joined.")
 
 
 @app.route('/')
@@ -112,4 +110,4 @@ def processStop():
     return jsonify(response), 200
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(port=5000, debug=True)
