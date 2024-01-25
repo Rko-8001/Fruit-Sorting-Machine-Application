@@ -17,6 +17,7 @@ object_detection_thread = None
 
 def objectDetectionProcess():
     global stop_object_detection
+    print(stop_object_detection)
     cap = cv2.VideoCapture(0)
 
     while True:
@@ -37,8 +38,11 @@ def objectDetectionProcess():
 def startObjectDetection():
     global stop_object_detection
     global object_detection_thread
-
+    
     stop_object_detection = False
+    
+    print(object_detection_thread)
+    
     object_detection_thread = threading.Thread(target=objectDetectionProcess)
     object_detection_thread.start()
 
@@ -49,10 +53,15 @@ def stopObjectDetection():
     # Set the flag to stop the object detection thread
     stop_object_detection = True
 
-    # Optionally, wait for the thread to finish
-    if object_detection_thread is not None:
+    # # Optionally, wait for the thread to finish
+    # if object_detection_thread is not None:
+    #     object_detection_thread = None
+    print(object_detection_thread)
+    while(object_detection_thread != None):
         object_detection_thread.join()
         object_detection_thread = None
+    
+    print(object_detection_thread)
 
 
 @app.route('/')
