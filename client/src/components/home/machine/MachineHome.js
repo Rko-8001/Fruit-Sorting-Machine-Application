@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
 
@@ -71,20 +71,25 @@ export default function MachineHome() {
   }
 
 
-  // useEffect(() => {
-  //   // Connect to the WebSocket server for video frames
-  //   const videoSocket = io({BackendUrl});
-  //   videoSocket.on('video_frame', (data) => {
-  //     const blob = new Blob([data], { type: 'image/jpeg' });
-  //     const url = URL.createObjectURL(blob);
-  //     setVideoSrc(url);
-  //   });
 
-  //   // Clean up WebSocket connections when component unmounts
-  //   return () => {
-  //     videoSocket.disconnect();
-  //   };
-  // }, []);
+  const videoRef = useRef(null);
+  useEffect(() => {
+      const websocket = new WebSocket(`ws:localhost:5000/process/camera`);
+
+      websocket.onopen = () => {
+        console.log('WebSocket connected');
+      };
+
+      websocket.onmessage = (event) => {
+        const blob = new Blob([event.data], { type: 'image/jpeg' });
+        const url = URL.createObjectURL(blob);
+        videoRef.current.src = url;
+      };
+
+      return () => {
+        websocket.close();
+      };
+  }, []);
 
 
 
@@ -128,7 +133,7 @@ export default function MachineHome() {
                 }
               </button>
 
-              <button 
+              <button
                 onClick={handleStop}
                 className="inline-flex px-5 py-3 text-white bg-red-600 hover:bg-red-700 focus:bg-red-700 rounded-md ml-6 mb-3"
               >
@@ -157,7 +162,7 @@ export default function MachineHome() {
               <div class="px-6 py-5 font-semibold border-b border-gray-100">Camera</div>
               <div class="p-4 flex-grow">
                 <div class="flex items-center justify-center h-full px-4 py-24 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">
-                  <img src={videoSrc} alt="video" className="h-96 w-full" />
+                  <img ref={videoRef} alt="Video" autoPlay playsInline className="h-96 w-auto" />
                 </div>
               </div>
             </div>

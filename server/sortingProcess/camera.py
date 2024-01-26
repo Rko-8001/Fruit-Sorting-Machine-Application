@@ -1,18 +1,30 @@
 import cv2
 from threading import Event
+from fastapi import WebSocket, WebSocketDisconnect
 
 cameraEvent = Event()
 
-def display_camera():
+async def display_camera(websocket: WebSocket):
+    await websocket.accept() 
+
     global cameraEvent
     cameraEvent.set()
+    
     camera = cv2.VideoCapture(0)  # 0 for the default camera
     while cameraEvent.is_set():
         success, frame = camera.read()
         if not success:
             break
-        
-        cv2.imshow('Camera', frame)
+        # convert the image to JPEG format
+        ret, jpeg = cv2.imencode('.jpg', frame)
+        # convert the image to bytes
+        frame_bytes = jpeg.tobytes()
+        # Send the frame bytes
+        try:
+            await websocket.send_bytes(frame_bytes)
+        except WebSocketDisconnect:
+            break        
+
         while cv2.waitKey(1) & 0xFF == ord('q'):
             break
     

@@ -9,7 +9,7 @@ router = APIRouter()
 @router.get('/start')
 async def processStart(background_tasks: BackgroundTasks):
     # start the camera
-    background_tasks.add_task(display_camera)
+    # background_tasks.add_task(display_camera)
     print("Camera Started")
     # start the conveyor belt
 
