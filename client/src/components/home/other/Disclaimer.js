@@ -15,13 +15,12 @@ export default function Disclaimer() {
 
     try {
       const response = await fetch(`${BackendUrl}process/start`, {
-        // method: "POST",
-        method: "GET",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        // body: JSON.stringify(getSortCategory())
-      })
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sortCategory: getSortCategory() }),
+      });
       if (response.status === 200) {
         const data = await response.json();
         nextPage()

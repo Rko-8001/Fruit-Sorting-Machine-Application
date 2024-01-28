@@ -1,16 +1,21 @@
-from fastapi import APIRouter, BackgroundTasks
-from .camera import display_camera, stop_camera
-
+from fastapi import APIRouter, BackgroundTasks, Request
+from .camera import start_camera, stop_camera
+from .shared import sortCategory, cameraEvent
 
 router = APIRouter()
 # process APIs for the sorting process
 
 # Route to start sorting process
-@router.get('/start')
-async def processStart(background_tasks: BackgroundTasks):
+@router.post('/start')
+async def processStart(background_tasks: BackgroundTasks, request: Request):
+    global sortCategory
+    data = await request.json()
+    sortCategory = data['sortCategory']
     # start the camera
+    start_camera()
     # background_tasks.add_task(display_camera)
     print("Camera Started")
+
     # start the conveyor belt
 
     return {"message": "Sorting Process Started"}, 200
@@ -19,6 +24,10 @@ async def processStart(background_tasks: BackgroundTasks):
 # Route to stop sorting process
 @router.get('/stop')
 async def processStop():
+
+    global sortCategory
+    sortCategory = "None"
+
     # stop the camera
     stop_camera()
     # stop the conveyor belt

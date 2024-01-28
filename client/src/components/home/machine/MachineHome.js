@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
 
 import { FaPlay, FaPause, FaHourglassStart, FaStop } from "react-icons/fa";
 import { BackendUrl } from "../../../Url";
@@ -9,9 +8,8 @@ import { setOptionPhase } from '../../tokens/Token';
 
 export default function MachineHome() {
   const navigate = useNavigate();
-  const [isRunning, setIsRunning] = useState(true);
-  const [videoSrc, setVideoSrc] = useState('');
-
+  const [isRunning, setIsRunning] = useState(false);
+  const videoRef = useRef(null);
 
   const pauseProcess = async () => {
     try {
@@ -70,28 +68,35 @@ export default function MachineHome() {
     navigate("/home");
   }
 
+  function base64ToBlob(base64) {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: 'image/jpeg' });
+  }
 
 
-  const videoRef = useRef(null);
   useEffect(() => {
-      const websocket = new WebSocket(`ws:localhost:5000/process/camera`);
+    const websocket = new WebSocket('ws://localhost:5000/process/camera');
 
-      websocket.onopen = () => {
-        console.log('WebSocket connected');
-      };
+    websocket.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      const frameBase64 = data.frame;
+      const prediction = data.prediction;
 
-      websocket.onmessage = (event) => {
-        const blob = new Blob([event.data], { type: 'image/jpeg' });
-        const url = URL.createObjectURL(blob);
-        videoRef.current.src = url;
-      };
+      const frameBlob = base64ToBlob(frameBase64);
+      const frameUrl = URL.createObjectURL(frameBlob);
+      videoRef.current.src = frameUrl;
 
-      return () => {
-        websocket.close();
-      };
+      // Handle prediction
+    };
+    return () => {
+      websocket.close();
+    };
   }, []);
-
-
 
   return (
     <div className="px-20 w-full md:px-10 sm:px-5 justify-center flex ">
@@ -126,7 +131,7 @@ export default function MachineHome() {
                   :
                   (
                     <>
-                      <FaPause className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2" />
+                      <FaPlay className="flex-shrink-0 h-5 w-5 -ml-1 mt-0.5 mr-2" />
                       UnPause Machine
                     </>
                   )
