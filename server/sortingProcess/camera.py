@@ -3,10 +3,10 @@ from threading import Event
 import base64
 from fastapi import WebSocket, WebSocketDisconnect
 from .predictors import predictor
-from .shared import sortCategory, cameraEvent
+from .shared import getSortCategory,setSortCategory, cameraEvent
 
 async def display_camera(websocket: WebSocket):
-    global sortCategory
+    sortCategory=getSortCategory() #calling getter function
     await websocket.accept() 
     
     camera = cv2.VideoCapture(0)  
@@ -17,7 +17,7 @@ async def display_camera(websocket: WebSocket):
         
         # get the prediction
         prediction = predictor(frame, sortCategory)
-        print(sortCategory)
+        # print(sortCategory)
         # Encode frame as JPEG
         _, encoded_frame = cv2.imencode('.jpg', frame)
         # Convert to bytes

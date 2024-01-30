@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks, Request
 from .camera import start_camera, stop_camera
-from .shared import sortCategory, cameraEvent
+from .shared import getSortCategory,setSortCategory, cameraEvent
 
 router = APIRouter()
 # process APIs for the sorting process
@@ -8,9 +8,11 @@ router = APIRouter()
 # Route to start sorting process
 @router.post('/start')
 async def processStart(background_tasks: BackgroundTasks, request: Request):
-    global sortCategory
+    # global sortCategory
     data = await request.json()
     sortCategory = data['sortCategory']
+    setSortCategory(sortCategory) # calling setter function
+    print(sortCategory)
     # start the camera
     start_camera()
     # background_tasks.add_task(display_camera)
@@ -25,8 +27,9 @@ async def processStart(background_tasks: BackgroundTasks, request: Request):
 @router.get('/stop')
 async def processStop():
 
-    global sortCategory
+    # global sortCategory
     sortCategory = "None"
+    setSortCategory(sortCategory) #calling setter function
 
     # stop the camera
     stop_camera()
