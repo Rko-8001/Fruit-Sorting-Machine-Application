@@ -86,6 +86,7 @@ setup_server() {
 run_server() {
     activate_virtual_env
     cd "$Server_DIR"
+    export PYTHONDONTWRITEBYTECODE=1
     uvicorn server:app --reload --port 5000 --app-dir .
     echo "Server running."
 }
