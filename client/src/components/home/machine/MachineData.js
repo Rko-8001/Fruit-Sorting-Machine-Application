@@ -4,18 +4,21 @@ import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 export const fruitStats = [
     {
         name: "Total",
+        id:'total',
         button: MdOutlineAccountBalanceWallet,
     },
     {
-        name: "Yellow Apple",
+        id: "fresh",
+        name: "Fresh Apple",
         button: RiNumber1,
     },
     {
-        name: "Red Apple",
+        id: "rotten",
+        name: "Rotten Apple",
         button: RiNumber2,
     },
-    {
-        name: "Green Apple",
-        button: RiNumber3,
-    }
+    // {
+    //     name: "Green Apple",
+    //     button: RiNumber3,
+    // }
 ]

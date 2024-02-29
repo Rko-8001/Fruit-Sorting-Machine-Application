@@ -4,7 +4,7 @@ from threading import Event
 import base64
 from fastapi import WebSocket, WebSocketDisconnect
 from .predictors import predictor
-from .shared import getSortCategory,setSortCategory, cameraEvent
+from .shared import getSortCategory,setSortCategory, getPausedOrNot, cameraEvent
 from .detection import objectDetection
 
 # send frame and prediction to client
@@ -31,10 +31,16 @@ async def send_frame(websocket: WebSocket, frame):
 async def display_camera(websocket: WebSocket):
     await websocket.accept() 
     sortCategory=getSortCategory() #calling getter function
-        
+    previousFrame = None    
     camera = cv2.VideoCapture(2)  
     while True:
+        # Check if camera is paused
+        if getPausedOrNot == True:
+            await send_frame(websocket, previousFrame)
+            continue
+
         success, frame = camera.read()
+        previousFrame = frame
         if not success:
             break
 

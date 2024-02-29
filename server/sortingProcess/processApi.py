@@ -1,5 +1,5 @@
 from fastapi import APIRouter, BackgroundTasks, Request
-from .shared import getSortCategory,setSortCategory, cameraEvent
+from .shared import getSortCategory,setSortCategory, pauseCamera, resumeCamera, cameraEvent
 
 router = APIRouter()
 # process APIs for the sorting process
@@ -34,3 +34,19 @@ async def processStop():
     return {"message": "Sorting Process Stopped"}, 200
 
 
+@router.get('/pause')
+async def processPause():
+    print("paused")
+    pausedOrNot = True
+    pauseCamera(pausedOrNot) #calling setter function
+
+    return {"message": "Sorting Process Paused"}, 200
+
+
+@router.get('/resume')
+async def processResume():
+    print("resumed")
+    pausedOrNot = False
+    resumeCamera(pausedOrNot) #calling setter function
+
+    return {"message": "Sorting Process Resumed"}, 200

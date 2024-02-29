@@ -9,6 +9,7 @@ import Statistics from "../stats/Statistics";
 import HowToUse from "../howToUse/HowToUse";
 import FAQs from "../faq/FAQs";
 import SessionStat from "../stats/SessionStat";
+import StatAfterSessionEnded from "../stats/StatAfterSessionEnded";
 
 export const HomePage = (
   <>
@@ -55,6 +56,15 @@ export const MachinePage = (
   </>
 );
 
+export const OnGoingSessionStat = (
+  <>
+    <div className="flex">
+      <SideBar />
+      <StatAfterSessionEnded />
+    </div>
+  </>
+)
+
 export const HowToUsePage = (
   <>
     <div className="flex">
@@ -75,7 +85,7 @@ export const StatisticsPage = (
 
 export const SessionStatPage = (
   <>
-    <div className="flex">
+    <div className="flex w-full">
       <SideBar />
       <SessionStat />
     </div>

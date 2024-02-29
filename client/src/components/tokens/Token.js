@@ -64,3 +64,13 @@ export const getOptionPhase = () => {
     }
     return "sortPage";
 }
+
+
+export const setSessionStatistics = (stat) => {
+    sessionStorage.setItem('sessionStat', JSON.stringify(stat));
+}
+
+export const getSessionStatistics = () => {
+    const existingStat = sessionStorage.getItem('sessionStat');
+    return JSON.parse(existingStat);
+}

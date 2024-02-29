@@ -7,6 +7,7 @@ import {
   Error404,
   DisclaimerInfo,
   MachinePage,
+  OnGoingSessionStat,
   StatisticsPage,
   HowToUsePage,
   FAQsPage,
@@ -30,6 +31,7 @@ export default function App() {
           <Route index element={<AppRoute Component={Dashboard} />} />
           <Route path="disclaimer" element={<AppRoute Component={DisclaimerInfo} />} />
           <Route path="machineHome" element={<AppRoute Component={MachinePage} />} />
+          <Route path="stats" element={<AppRoute Component={OnGoingSessionStat} />} />
         </Route>
 
         <Route path="/stats">

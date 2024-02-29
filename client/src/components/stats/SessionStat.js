@@ -1,73 +1,92 @@
-import React from 'react'
-
+import React from 'react';
+import { giveNumberIcon } from "./FetchNumberIcon";
+import { useNavigate } from 'react-router-dom';
 export default function SessionStat() {
-  return (
-    <>
-      <div class="flex items-center justify-center px-4">
-        <div class="max-w-4xl text-black bg-white w-full rounded-lg shadow-xl">
-          
-          <div class="p-4 border-b ">
-              <h2 class="text-2xl ">
-                  Sorting Session Statistics [ Session ID: 1234]
-              </h2>
-              <p class="text-sm text-gray-500">
-                  Dated: 20-10-2023
-              </p>
-          </div>
+    const navigate = useNavigate();
 
-          <div>
-              <div class="bg-gray-400 md:grid md:grid-cols-2 md:space-y-0 space-y-1 p-4 border-b">
-                  <p>Sorting Basis</p>
-                  <p>Color</p>
-              </div>
+    const otherStats = [
+        {
+            id: "time",
+            name: "Timer Duration"
+        },
+        {
+            id: "category",
+            name: "Sorting Category",
 
-              <div class="bg-white md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b">
-                  <p>Time Taken</p>
-                  <p>1 hr 10 mins</p>
-              </div>
+        },
+        {
+            id: "starttime",
+            name: "Start Time",
+        },
+        {
+            id: "endtime",
+            name: "End Time",
+        },
+        {
+            id: "pauseOrUnPause",
+            name: "Number of times Paused: ",
+        },
 
-              <div class="bg-gray-400 md:grid md:grid-cols-2 md:space-y-0 space-y-1 p-4 border-b">
-                  <p>Fruit Sorted Yield</p>
-                  <p>2345</p>
-              </div>
 
-              <div class="bg-white md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b">
-                  <p>Other Details</p>
-                  <p>
-                    Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa 
-                    consequat. Excepteur qui ipsum aliquip consequat sint. Sit id mollit nulla mollit nostrud 
-                    in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu. 
-                  </p>
-              </div>
-              
-              <div class="bg-gray-400 md:grid md:grid-cols-2 md:space-y-0 space-y-1 p-4">
-                  <p>Category wise yield</p>
-                  <div class="space-y-2">
-                      <div class="border-2 flex items-center p-2 rounded justify-between space-x-2">
-                          <div class="space-x-2 truncate">
-                              <span>Red Apple </span>
-                          </div>
-                          <p class="text-purple-700 hover:underline">234</p>
-                      </div>
-                      <div class="border-2 flex items-center p-2 rounded justify-between space-x-2">
-                          <div class="space-x-2 truncate">
-                              <span>Red Yellow Apple </span>
-                          </div>
-                          <p class="text-purple-700 hover:underline">14</p>
-                      </div>
-                      <div class="border-2 flex items-center p-2 rounded justify-between space-x-2">
-                          <div class="space-x-2 truncate">
-                              <span>Green Apple </span>
-                          </div>
-                          <p class="text-purple-700 hover:underline">30</p>
-                      </div>
-                      
-                  </div>
-              </div>
-          </div>
+    ]
+    return (
+        <div className="bg-white w-full dark:bg-gray-900">
+            <div className="container px-6 py-8 mx-auto">
+                <h1 className="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl dark:text-white">Sorting Session [Session ID: 1234]</h1>
 
+                <p className="max-w-2xl mx-auto mt-4 text-center text-gray-500 xl:mt-6 dark:text-gray-300">
+                </p>
+
+                <div className="grid grid-cols-1 gap-8 mt-6 lg:grid-cols-3 xl:mt-12">
+                    <div className="flex items-center justify-between px-8 py-4 border cursor-pointer rounded-xl dark:border-gray-700">
+                        <div className="flex flex-col items-center space-y-1">
+                            <h2 className="text-3xl font-medium text-gray-700 sm:text-xl ">Total Apple Sorted: </h2>
+                        </div>
+
+                        <h2 className="text-1xl font-normal text-gray-500 sm:text-3xl dark:text-gray-300">2</h2>
+                    </div>
+                    <div className="flex items-center justify-between px-8 py-4 border cursor-pointer rounded-xl dark:border-gray-700">
+                        <div className="flex flex-col items-center space-y-1">
+                            <h2 className="text-3xl font-medium text-gray-700 sm:text-xl ">Fresh Apple: </h2>
+                        </div>
+
+                        <h2 className="text-1xl font-normal text-gray-500 sm:text-3xl dark:text-gray-300">1 </h2>
+                    </div>
+                    <div className="flex items-center justify-between px-8 py-4 border cursor-pointer rounded-xl dark:border-gray-700">
+                        <div className="flex flex-col items-center space-y-1">
+                            <h2 className="text-3xl font-medium text-gray-700 sm:text-xl ">Rotten Apple: </h2>
+                        </div>
+
+                        <h2 className="text-1xl font-normal text-gray-500 sm:text-3xl dark:text-gray-300">1</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div className="p-8 mt-8 space-y-8 bg-gray-100 dark:bg-gray-800 rounded-xl">
+
+                {otherStats && otherStats.map((stat, index) => (
+                    <div key={stat.id} className="flex items-center justify-between px-3 mr-10 text-gray-800 ">
+                        <p className="text-2xl flex flex-row">
+                            {giveNumberIcon(index)}
+                            <p className='mx-2'>{stat.name}</p>
+                        </p>
+                        <p className="text-3xl ">1</p>
+                    </div>
+                ))}
+            </div>
+
+
+            <div className="flex justify-center mt-8">
+                <button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/stats');
+                    }}
+                    className="px-8 py-2 tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500 focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                >
+                    Go Back
+                </button>
+            </div>
         </div>
-      </div>
-    </>
-  )
+    )
 }
