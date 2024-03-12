@@ -132,7 +132,7 @@ export default function MachineHome() {
     if (isRunning) {
       setIsRunning(false)
       setIsTimerRunning(false)
-      // await pauseProcess()
+      await pauseProcess()
     }
     else {
       setIsRunning(true)
@@ -243,7 +243,6 @@ export default function MachineHome() {
               </div>
             ))}
           </div>
-
           <VideoComp />
 
         </div>

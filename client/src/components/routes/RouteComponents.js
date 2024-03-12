@@ -49,10 +49,7 @@ export const DisclaimerInfo = (
 
 export const MachinePage = (
   <>
-    <div className="flex">
-      <SideBar />
       <MachineHome />
-    </div>
   </>
 );
 
