@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from .parameters import yoloCfg, yoloWeights, coco_names, confidenceInterval, widthBegin, widthEnd
+from .parameters import yoloCfg, yoloWeights, coco_names, confidenceInterval, widthThreshold
 
 net = cv2.dnn.readNet(yoloWeights, yoloCfg)
 
@@ -22,7 +22,11 @@ def extractDimensions(detection, frame):
 
 
 def objectDetection(frame): 
-    global confidenceInterval, widthBegin, widthEnd
+    global confidenceInterval, widthThreshold
+    _ , width, _ = frame.shape
+
+    widthBegin = width // 2 - widthThreshold
+    widthEnd = width // 2 + widthThreshold
 
     inMiddle = False
     blob = cv2.dnn.blobFromImage(frame, 0.00392, (416, 416), (0, 0, 0), True, crop=False)
@@ -37,12 +41,11 @@ def objectDetection(frame):
             confidence = scores[class_id]
 
             if confidence >= confidenceInterval:  # Adjust the confidence threshold as needed
-                x, y, w, h, center_x, center_y = extractDimensions(detection, frame)
+                x, y, w, h, center_x, _= extractDimensions(detection, frame)
                 cv2.rectangle(frame, (x, y), (x + w, y+h), (0, 255, 0), 2)
-
-                if (center_x >= widthBegin and center_x <= widthEnd): 
+                if ( center_x >= widthBegin and center_x <= widthEnd ) :
                     inMiddle = True
-                break
+                    break
 
     return frame, inMiddle
     

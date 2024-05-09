@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-const VideoComp = () => {
+const VideoComp = ( { handlePrediction }) => {
     const ws = useRef();
     if (!ws.current) {
         ws.current = new WebSocket('ws://localhost:5000/process/camera');
@@ -22,7 +22,9 @@ const VideoComp = () => {
         const frameBase64 = data.frame;
         const frameBlob = base64ToBlob(frameBase64);
         const frameUrl = URL.createObjectURL(frameBlob);
-
+        const prediction = data.prediction;
+        handlePrediction(prediction);
+        console.log(prediction)
         if (videoRef.current) {
             videoRef.current.src = frameUrl;
         }
@@ -69,7 +71,6 @@ const VideoComp = () => {
                 </div>
             </div>
 
-            <button onClick={closeSocketConnection}>Close</button>
         </div>
     );
 }

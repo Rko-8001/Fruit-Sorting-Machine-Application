@@ -8,7 +8,7 @@ router = APIRouter()
 @router.websocket("/camera")
 async def camera_feed(websocket: WebSocket):
     await websocket.accept()
-    camera = cv2.VideoCapture(2)  
+    camera = cv2.VideoCapture(0)  
     background_tasks = BackgroundTasks()
     try:
         await display_camera(camera, websocket, background_tasks)

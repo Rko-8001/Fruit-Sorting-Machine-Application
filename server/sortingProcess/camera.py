@@ -31,7 +31,8 @@ async def send_frame(websocket: WebSocket, frame, prediction , background_tasks:
 async def display_camera(camera, websocket: WebSocket, background_tasks: BackgroundTasks):
     global framesToSkip
     sortCategory, prediction, previousFrame, skipFrame = getSortCategory(), None, False, 0
-
+    sortCategory = "freshness"
+    
     while True:
         success, frame = camera.read()
         previousFrame = frame
@@ -39,13 +40,20 @@ async def display_camera(camera, websocket: WebSocket, background_tasks: Backgro
             break
 
         newFrame, objectDetected = objectDetection(frame)
-        if objectDetected == True and skipFrame == 0: 
-            prediction = predictor(frame, sortCategory)
-        elif objectDetected == False:
-            skipFrame = 0
-        else:
-            skipFrame = (skipFrame + 1)% framesToSkip # no of frames to skip
+        if skipFrame == 0:
+            if objectDetected == True:
+                # do the prediction
+                predictionMessage = "Apple gone for prediction"
+                print(predictionMessage)
+                prediction = predictor(frame, sortCategory)
+                print("Prediction:", prediction)
+                skipFrame += 1
+        else: 
+            if(objectDetected == True):
+                print("objectDetected but not predicted")
+            skipFrame = (skipFrame + 1) % (framesToSkip + 1 )
 
+        
         # Send frame and prediction to client 
         await send_frame(websocket, newFrame, prediction , background_tasks)
     camera.release()

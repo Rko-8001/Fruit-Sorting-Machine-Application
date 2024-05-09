@@ -22,3 +22,9 @@ yarn-error.log*
 # server files and env
 server-env/
 __pycache__/
+
+# Ignore large files managed by Git LFS
+*.h5
+
+# Ignore directories where large files might be stored
+models/

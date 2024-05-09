@@ -25,6 +25,15 @@ export default function MachineHome() {
   const [isRunning, setIsRunning] = useState(true);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
 
+
+  const handlePrediction = (prediction) => {
+      if (prediction == "Non-Defective")
+        incrementValues("fresh")
+      else if (prediction == "Defective") 
+        incrementValues("rotten")
+  }
+
+
   const stopProcess = async () => {
     try {
       const response = await fetch(`${BackendUrl}process/stop`, {
@@ -243,13 +252,14 @@ export default function MachineHome() {
               </div>
             ))}
           </div>
-          <VideoComp />
+          <VideoComp handlePrediction={handlePrediction} />
 
         </div>
-        <div className='flex flex-row gap-4'>
+        
+        {/* <div className='flex flex-row gap-4'>
           <button onClick={(e) => { e.preventDefault(); incrementValues("fresh"); }} className='bg-yellow-300 w-20 h-5'>fresh</button>
           <button onClick={(e) => { e.preventDefault(); incrementValues("rotten");}} className='bg-yellow-300 w-20 h-5 '>rotten</button>
-        </div>
+        </div> */}
       </div>
     </div>
   )
